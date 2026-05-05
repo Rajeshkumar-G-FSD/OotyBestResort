@@ -39,7 +39,7 @@ export const Footer = () => (
     
     <div className="max-w-7xl mx-auto mt-24 pt-8 border-t border-gray-50 text-center">
       <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-text-muted/50">
-        © 2024 AURA LUXURY RESORTS. IMMERSIVE TRANQUILITY.
+        © 2026 DATAZYNC
       </p>
     </div>
   </footer>
