@@ -32,7 +32,7 @@ export const DiningPage = () => (
         </div>
         <div className="flex-1 w-full h-[500px] rounded-[40px] overflow-hidden shadow-2xl">
           <img 
-            src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2000&auto=format&fit=crop" 
+            src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=2000&auto=format&fit=crop" 
             alt="Dining Atmosphere" 
             className="w-full h-full object-cover" 
           />

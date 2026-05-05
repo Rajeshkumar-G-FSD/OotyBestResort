@@ -1,8 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 import { IMAGES, SUITES } from "../constants";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-
 const SYSTEM_INSTRUCTION = `
 You are the AI Concierge for Aura Resort, a luxury minimalist resort.
 Your personality is professional, serene, and helpful. You speak with a touch of "zen" elegance.
@@ -31,21 +29,43 @@ Interaction Guidelines:
 - If the user asks to book, tell them: "You can click the 'Book Now' button in our menu or right here in our conversation to start your journey."
 `;
 
+let aiInstance: GoogleGenAI | null = null;
+
+const getAi = () => {
+  if (!aiInstance) {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey || apiKey === 'MY_GEMINI_API_KEY' || apiKey === 'undefined') {
+      console.warn("Gemini API Key is missing or invalid. AI features will be disabled.");
+      return null;
+    }
+    aiInstance = new GoogleGenAI({ apiKey });
+  }
+  return aiInstance;
+};
+
 export const chatWithConcierge = async (message: string, history: { role: 'user' | 'model', parts: { text: string }[] }[] = []) => {
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+    const ai = getAi();
+    if (!ai) {
+      return "I'm currently resting. Please contact our front desk at +1 (555) 123-4567 for assistance.";
+    }
+
+    const model = ai.getGenerativeModel({
+      model: "gemini-1.5-flash", // Using a stable model name
+      systemInstruction: SYSTEM_INSTRUCTION,
+    });
+
+    const response = await model.generateContent({
       contents: [
         ...history.map(h => ({ role: h.role, parts: h.parts })),
         { role: 'user', parts: [{ text: message }] }
       ],
-      config: {
-        systemInstruction: SYSTEM_INSTRUCTION,
+      generationConfig: {
         temperature: 0.7,
       },
     });
 
-    return response.text;
+    return response.response.text();
   } catch (error) {
     console.error("AI Chat Error:", error);
     return "I apologize, but I'm having trouble connecting to my thoughts. Please try again or contact us directly.";
