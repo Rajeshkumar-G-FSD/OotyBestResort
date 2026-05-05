@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  
+  /* Aura Resort Palette */
+  --color-brand-primary: #0058bc;
+  --color-brand-primary-light: #0070eb;
+  --color-brand-bg: #f9f9fb;
+  --color-brand-surface: #ffffff;
+  --color-brand-text: #1a1c1d;
+  --color-brand-text-muted: #414755;
+  
+  /* Spacing Scale */
+  --spacing-margin-desktop: 64px;
+  --spacing-margin-mobile: 20px;
+  --spacing-container-max: 1200px;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-bg text-brand-text font-sans antialiased overflow-x-hidden;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/70 backdrop-blur-2xl saturate-150 border border-white/40 shadow-sm;
+  }
+  
+  .glass-dark {
+    @apply bg-white/40 backdrop-blur-3xl saturate-180 border border-white/20 shadow-xl;
+  }
+
+  .text-display-lg {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1];
+  }
+  
+  .text-headline-md {
+    @apply text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight leading-[1.2];
+  }
+}
